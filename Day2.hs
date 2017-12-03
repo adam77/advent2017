@@ -24,7 +24,7 @@ input = "278\t1689\t250\t1512\t1792\t1974\t175\t1639\t235\t1635\t1690\t1947\t810
 
 checksum :: String -> Int
 checksum dat =
-  let 
+  let
     parsed = (map.map) read (words <$> (lines dat))
     maxs = maximum <$> parsed
     mins = minimum <$> parsed
@@ -34,12 +34,10 @@ checksum dat =
 
 checksum2 :: String -> Int
 checksum2 dat =
-  let 
+  let
     parsed = (map.map) read (words <$> (lines dat))
     sorted = sort <$> parsed
     paired = (\vals -> [(x,y) | (y:rest) <- tails vals, x <- rest]) <$> sorted
-  --  divisible = find (\(x,y) -> x `rem` y == 0) <$> paired
-  --  values = (\mabes -> fromMaybe (0,1) mabes  ) <$> divisible
     values = (foldl (\total (x,y) -> if x `rem` y /= 0 then total else total + (x `div` y)) 0) <$> paired
   in
     sum $ values
@@ -47,4 +45,3 @@ checksum2 dat =
 
 main :: IO ()
 main = putStrLn $ show $ checksum2 input
-
